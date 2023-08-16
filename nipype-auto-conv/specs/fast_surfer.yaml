@@ -1,0 +1,156 @@
+# This file is used to manually specify the semi-automatic conversion of
+# 'nipype.interfaces.fastsurfer.FastSurfer' from Nipype to Pydra.
+#
+# Please fill-in/edit the fields below where appropriate
+#
+# Docs
+# ----
+# Wraps FastSurfer command for segmentation and surface processing.
+#     
+task_name: fast_surfer
+nipype_name: FastSurfer
+nipype_module: nipype.interfaces.fastsurfer
+inputs:
+  omit:
+  # list[str] - fields to omit from the Pydra interface
+  rename:
+  # dict[str, str] - fields to rename in the Pydra interface
+  types:
+  # dict[str, type] - override inferred types (use "mime-like" string for file-format types,
+  # e.g. 'medimage/nifti-gz'). For most fields the type will be correctly inferred
+  # from the nipype interface, but you may want to be more specific, particularly
+  # for file types, where specifying the format also specifies the file that will be
+  # passed to the field in the automatically generated unittests.
+    T1_files: generic/file
+    # type=file|default=<undefined>: T1 full head input (not bias corrected, global path)
+    fs_license: generic/file
+    # type=file|default=<undefined>: Path to FreeSurfer license key file.
+    seg: generic/file
+    # type=file|default=<undefined>: Pre-computed segmentation file
+    weights_sag: generic/file
+    # type=file|default=<undefined>: Pretrained weights of sagittal network
+    weights_ax: generic/file
+    # type=file|default=<undefined>: Pretrained weights of axial network
+    weights_cor: generic/file
+    # type=file|default=<undefined>: Pretrained weights of coronal network
+    seg_log: generic/file
+    # type=file|default=<undefined>: Name and location for the log-file for the segmentation (FastSurferCNN).
+    run_viewagg_on: generic/file
+    # type=file|default=<undefined>: Define where the view aggregation should be run on.
+  metadata:
+  # dict[str, dict[str, any]] - additional metadata to set on any of the input fields (e.g. out_file: position: 1)
+outputs:
+  omit:
+  # list[str] - fields to omit from the Pydra interface
+  rename:
+  # dict[str, str] - fields to rename in the Pydra interface
+  types:
+  # dict[str, type] - override inferred types (use "mime-like" string for file-format types,
+  # e.g. 'medimage/nifti-gz'). For most fields the type will be correctly inferred
+  # from the nipype interface, but you may want to be more specific, particularly
+  # for file types, where specifying the format also specifies the file that will be
+  # passed to the field in the automatically generated unittests.
+    orig_nu: generic/file
+    # type=file: Base image conformed to Fastsurfer space and nonuniformity corrected
+    T1: generic/file
+    # type=file: Intensity normalized whole-head volume
+    aseg: generic/file
+    # type=file: Volumetric map of regions from automatic segmentation
+    brain: generic/file
+    # type=file: Intensity normalized brain-only volume
+    brainmask: generic/file
+    # type=file: Skull-stripped (brain-only) volume
+    filled: generic/file
+    # type=file: Subcortical mass volume
+    norm: generic/file
+    # type=file: Normalized skull-stripped volume
+    nu: generic/file
+    # type=file: Non-uniformity corrected whole-head volume
+    orig: generic/file
+    # type=file: Base image conformed to Freesurfer space
+    rawavg: generic/file
+    # type=file: Volume formed by averaging input images
+    wm: generic/file
+    # type=file: Segmented white-matter volume
+    wmparc: generic/file
+    # type=file: Aparc parcellation projected into subcortical white matter
+  callables:
+  # dict[str, str] - names of methods/callable classes defined in the adjacent `*_callables.py`
+  # to set to the `callable` attribute of output fields
+  templates:
+  # dict[str, str] - `output_file_template` values to be provided to output fields
+    subjects_dir: subjects_dir
+    # type=directory: Subjects directory
+    # type=directory|default=<undefined>: Subjects directory
+  requirements:
+  # dict[str, list[str]] - input fields that are required to be provided for the output field to be present
+tests:
+- inputs:
+  # dict[str, str] - values to provide to inputs fields in the task initialisation
+  # (if not specified, will try to choose a sensible value)
+    subjects_dir:
+    # type=directory: Subjects directory
+    # type=directory|default=<undefined>: Subjects directory
+    subject_id:
+    # type=string: Subject ID
+    # type=string|default='': Subject ID
+    T1_files:
+    # type=file|default=<undefined>: T1 full head input (not bias corrected, global path)
+    fs_license:
+    # type=file|default=<undefined>: Path to FreeSurfer license key file.
+    seg:
+    # type=file|default=<undefined>: Pre-computed segmentation file
+    weights_sag:
+    # type=file|default=<undefined>: Pretrained weights of sagittal network
+    weights_ax:
+    # type=file|default=<undefined>: Pretrained weights of axial network
+    weights_cor:
+    # type=file|default=<undefined>: Pretrained weights of coronal network
+    seg_log:
+    # type=file|default=<undefined>: Name and location for the log-file for the segmentation (FastSurferCNN).
+    clean_seg:
+    # type=bool|default=False: Flag to clean up FastSurferCNN segmentation
+    run_viewagg_on:
+    # type=file|default=<undefined>: Define where the view aggregation should be run on.
+    no_cuda:
+    # type=bool|default=False: Flag to disable CUDA usage in FastSurferCNN (no GPU usage, inference on CPU)
+    batch:
+    # type=int|default=16: Batch size for inference. default=16. Lower this to reduce memory requirement
+    fstess:
+    # type=bool|default=False: Use mri_tesselate instead of marching cube (default) for surface creation
+    fsqsphere:
+    # type=bool|default=False: Use FreeSurfer default instead of novel spectral spherical projection for qsphere
+    fsaparc:
+    # type=bool|default=False: Use FS aparc segmentations in addition to DL prediction
+    no_surfreg:
+    # type=bool|default=False: Skip creating Surface-Atlas (sphere.reg) registration with FreeSurfer         (for cross-subject correspondence or other mappings)
+    parallel:
+    # type=bool|default=True: Run both hemispheres in parallel
+    threads:
+    # type=int|default=4: Set openMP and ITK threads to
+    py:
+    # type=string|default='python3.8': which python version to use. default=python3.6
+    seg_only:
+    # type=bool|default=False: only run FastSurferCNN (generate segmentation, do not surface)
+    surf_only:
+    # type=bool|default=False: only run the surface pipeline recon_surf.
+    args:
+    # type=str|default='': Additional parameters to the command
+    environ:
+    # type=dict|default={}: Environment variables
+  imports:
+  # list[nipype2pydra.task.importstatement] - list import statements required by the test, with each list item
+  # consisting of 'module', 'name', and optionally 'alias' keys
+  expected_outputs:
+  # dict[str, str] - expected values for selected outputs, noting that tests will typically
+  # be terminated before they complete for time-saving reasons, and therefore
+  # these values will be ignored, when running in CI
+  timeout: 10
+  # int - the value to set for the timeout in the generated test, 
+  # after which the test will be considered to have been initialised 
+  # successfully. Set to 0 to disable the timeout (warning, this could
+  # lead to the unittests taking a very long time to complete)
+  xfail: true
+  # bool - whether the unittest is expected to fail or not. Set to false
+  # when you are satisfied with the edits you have made to this file
+doctests: []
