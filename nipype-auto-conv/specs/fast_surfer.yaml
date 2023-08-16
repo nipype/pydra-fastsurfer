@@ -21,9 +21,9 @@ inputs:
   # from the nipype interface, but you may want to be more specific, particularly
   # for file types, where specifying the format also specifies the file that will be
   # passed to the field in the automatically generated unittests.
-    T1_files: generic/file
+    T1_files: medimage/nifti-gz+list-of
     # type=file|default=<undefined>: T1 full head input (not bias corrected, global path)
-    fs_license: generic/file
+    fs_license: text/plain
     # type=file|default=<undefined>: Path to FreeSurfer license key file.
     seg: generic/file
     # type=file|default=<undefined>: Pre-computed segmentation file
@@ -52,7 +52,7 @@ outputs:
   # passed to the field in the automatically generated unittests.
     orig_nu: generic/file
     # type=file: Base image conformed to Fastsurfer space and nonuniformity corrected
-    T1: generic/file
+    T1: medimage/nifti-gz
     # type=file: Intensity normalized whole-head volume
     aseg: generic/file
     # type=file: Volumetric map of regions from automatic segmentation
