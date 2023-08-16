@@ -1,7 +1,7 @@
 from conftest import pass_after_timeout
 import pytest
 from fileformats.generic import File
-from pydra.tasks.fastsurfer.auto.fast_surfer import fast_surfer
+from pydra.tasks.fastsurfer.v1.fast_surfer import fast_surfer
 
 
 @pytest.mark.xfail
