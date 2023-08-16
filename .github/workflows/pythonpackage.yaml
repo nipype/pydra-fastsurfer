@@ -18,7 +18,6 @@ on:
 jobs:
   
   devcheck:
-    needs: [nipype-conv]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,7 +50,6 @@ jobs:
         python -c "import pydra as m; print(f'{m.__name__} {m.__version__} @ {m.__file__}')"
 
   test:
-    needs: [nipype-conv]
     runs-on: ubuntu-latest
     strategy:
       matrix:
