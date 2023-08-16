@@ -59,8 +59,8 @@ jobs:
 
     - name: Install FastSurfer
       run: |
-        apt-get update
-        apt-get install -y --no-install-recommends \
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
           apt-utils \
           autoconf \
           build-essential \
@@ -78,13 +78,13 @@ jobs:
           pkg-config \
           unzip \
           xvfb
-        apt-get clean
-        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        sudo apt-get clean
+        sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
         cd /opt
-        mkdir /fastsurfer
-        git clone -b v2.0.4 https://github.com/Deep-MI/FastSurfer.git
-        cp /opt/FastSurfer/fastsurfer_env_gpu.yml /fastsurfer/fastsurfer_env_gpu.yml
-        cp -R /opt/FastSurfer/* /fastsurfer/ && rm -rf /opt/FastSurfer
+        sudo mkdir /fastsurfer
+        sudo git clone -b v2.0.4 https://github.com/Deep-MI/FastSurfer.git
+        sudo cp /opt/FastSurfer/fastsurfer_env_gpu.yml /fastsurfer/fastsurfer_env_gpu.yml
+        sudo cp -R /opt/FastSurfer/* /fastsurfer/ && rm -rf /opt/FastSurfer
     - name: Checkout Repository
       uses: actions/checkout@v3
     - name: Revert version to most recent tag on upstream update
