@@ -56,7 +56,37 @@ jobs:
         python-version: ['3.8', '3.11']
 
     steps:
-    - uses: actions/checkout@v3
+
+    - name: Install FastSurfer
+      run: |
+        apt-get update
+        apt-get install -y --no-install-recommends \
+          apt-utils \
+          autoconf \
+          build-essential \
+          bzip2 \
+          ca-certificates \
+          curl \
+          wget \
+          upx \
+          file \
+          git \
+          gnupg \
+          libtool \
+          lsb-release \
+          netbase \
+          pkg-config \
+          unzip \
+          xvfb
+        apt-get clean
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        cd /opt
+        mkdir /fastsurfer
+        git clone -b v2.0.4 https://github.com/Deep-MI/FastSurfer.git
+        cp /opt/FastSurfer/fastsurfer_env_gpu.yml /fastsurfer/fastsurfer_env_gpu.yml
+        cp -R /opt/FastSurfer/* /fastsurfer/ && rm -rf /opt/FastSurfer
+    - name: Checkout Repository
+      uses: actions/checkout@v3
     - name: Revert version to most recent tag on upstream update
       if: github.event_name == 'repository_dispatch'
       run: git checkout $(git tag -l | tail -n 1 | awk -F post '{print $1}')
