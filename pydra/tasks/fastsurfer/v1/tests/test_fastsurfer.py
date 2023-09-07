@@ -1,13 +1,13 @@
 from conftest import pass_after_timeout
 import pytest
 from fileformats.generic import File
-from pydra.tasks.fastsurfer.v1.fast_surfer import fast_surfer
+from pydra.tasks.fastsurfer.v1 import fastsurfer
 
 
 @pytest.mark.xfail
 @pass_after_timeout(seconds=10)
-def test_fast_surfer_1():
-    task = fast_surfer()
+def test_fastsurfer_1():
+    task = fastsurfer()
     task.inputs.subjects_dir = None
     task.inputs.subject_id = None
     task.inputs.T1_files = File.sample()
