@@ -2,12 +2,13 @@ from pydra.engine import specs
 from pydra.engine import ShellCommandTask
 import typing as ty
 from pathlib import Path
-from fileformats.generic import File
+from fileformats.generic import File, Directory
+from fileformats.medimage import NiftiGz, MghZip
 
 input_fields = [
     (
         "subjects_dir",
-        ty.Any,
+        Path,
         {
             "help_string": "Subjects directory",
             "argstr": "--sd {subjects_dir}",
@@ -207,7 +208,35 @@ fastsurfer_input_spec = specs.SpecInfo(
     name="Input", fields=input_fields, bases=(specs.ShellSpec,)
 )
 
-output_fields = []
+def norm_img_path(subjects_dir: Path):
+    return Path(subjects_dir) / "mri" / "norm.mgz"
+
+def aparcaseg_img_path(subjects_dir: Path):
+    return Path(subjects_dir) / "mri" / "aparc+aseg.mgz"
+
+output_fields = [
+    (
+        "subjects_dir",
+        Directory,
+        {
+            "help_string": "output directory",
+            "argstr": "--output_fields {subjects_dir}",
+            "output_file_template": "subjects_dir",
+        },
+        "norm_img",
+        MghZip,
+        {
+            "help_string": "norm image",
+            "callable": norm_img_path,
+        },
+        "aparcaseg_img",
+        MghZip,
+        {
+            "help_string": "aparc+aseg image",
+            "callable": norm_img_path,
+        },
+    )
+]
 fastsurfer_output_spec = specs.SpecInfo(
     name="Output", fields=output_fields, bases=(specs.ShellOutSpec,)
 )
@@ -219,7 +248,7 @@ class fastsurfer(ShellCommandTask):
     -------
 
     >>> from fileformats.generic import File
-    >>> from pydra.tasks.fastsurfer.auto.fast_surfer import fast_surfer
+    >>> from pydra.tasks.fastsurfer.v1.fast_surfer import fast_surfer
 
     """
 
