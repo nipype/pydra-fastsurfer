@@ -209,10 +209,10 @@ fastsurfer_input_spec = specs.SpecInfo(
 )
 
 def norm_img_path(subjects_dir: Path):
-    return Path(subjects_dir) / "mri" / "norm.mgz"
+    return Path(subjects_dir) / "mri" / "norm.nii.gz"
 
 def aparcaseg_img_path(subjects_dir: Path):
-    return Path(subjects_dir) / "mri" / "aparc+aseg.mgz"
+    return Path(subjects_dir) / "mri" / "aparc+aseg.nii.gz"
 
 output_fields = [
     (
@@ -223,17 +223,21 @@ output_fields = [
             "argstr": "--output_fields {subjects_dir}",
             "output_file_template": "subjects_dir",
         },
-        "norm_img",
-        MghZip,
+    ),
+    ( 
+        "norm_img", 
+        NiftiGz,
         {
             "help_string": "norm image",
             "callable": norm_img_path,
         },
+    ),
+    (
         "aparcaseg_img",
-        MghZip,
+        NiftiGz,
         {
             "help_string": "aparc+aseg image",
-            "callable": norm_img_path,
+            "callable": aparcaseg_img_path,
         },
     )
 ]
