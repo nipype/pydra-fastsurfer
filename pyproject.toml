@@ -3,7 +3,7 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pydra-tasks-fastsurfer"
+name = "pydra-fastsurfer"
 description = "Pydra tasks package for fastsurfer"
 readme = "README.rst"
 requires-python = ">=3.8"
