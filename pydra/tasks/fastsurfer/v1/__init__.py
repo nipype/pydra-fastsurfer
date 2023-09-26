@@ -3,7 +3,7 @@ from pydra.engine import ShellCommandTask
 import typing as ty
 from pathlib import Path
 from fileformats.generic import File, Directory
-from fileformats.medimage import NiftiGz, MghZip
+from fileformats.medimage import NiftiGz, MghGz
 
 input_fields = [
     (
@@ -212,21 +212,23 @@ def norm_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "norm.mgz"
 
 def aparcaseg_img_path(subjects_dir: Path):
-    return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.mgz"
+    return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.orig.mgz"
+
+def subject_dir_path(subjects_dir: Path) -> Path:
+    return Path(subjects_dir) / "FS_outputs" 
 
 output_fields = [
     (
-        "subjects_dir",
+        "subject_dir_output",
         Directory,
         {
-            "help_string": "output directory",
-            "argstr": "--output_fields {subjects_dir}",
-            "output_file_template": "subjects_dir",
+            "help_string": "subject directory path",
+            "callable": subject_dir_path,
         },
     ),
     ( 
         "norm_img", 
-        MghZip,
+        MghGz,
         {
             "help_string": "norm image",
             "callable": norm_img_path,
@@ -234,7 +236,7 @@ output_fields = [
     ),
     (
         "aparcaseg_img",
-        MghZip,
+        MghGz,
         {
             "help_string": "aparc+aseg image",
             "callable": aparcaseg_img_path,
