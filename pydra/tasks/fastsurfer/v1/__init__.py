@@ -212,6 +212,7 @@ fastsurfer_input_spec = specs.SpecInfo(
 def subject_dir_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs"
 
+# DELETE this after checking that the subject_dir_path works...
 # def subject_dir_path(subjects_dir: Path) -> Path:
 #     p = os.path.join(subjects_dir, "FS_outputs")
 #     print(Path(p))
@@ -222,21 +223,13 @@ def norm_img_path(subjects_dir: Path):
 
 # Update this section when Docker is being used
 def aparcaseg_img_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.mgz"
+
+def aparcaseg_orig_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.orig.mgz"
 
-
-
 output_fields = [
-    # (
-    #     "subjects_dir",
-    #     Directory,
-    #     {
-    #         "help_string": "Subjects directory",
-    #         "argstr": "--sd {subjects_dir}",
-    #         "output_file_template": "subjects_dir",
-    #     },
-    # ),
-    (
+      (
         "subjects_dir_output",
         Directory,
         {
@@ -254,12 +247,21 @@ output_fields = [
     ),
     (
         "aparcaseg_img",
-        MghGz,
+        Path,
         {
             "help_string": "aparc+aseg image",
             "callable": aparcaseg_img_path,
         },
+    ),
+    (
+        "aparcasegorig_img",
+        MghGz,
+        {
+            "help_string": "aparc+aseg.orig image",
+            "callable": aparcaseg_orig_img_path,
+        },
     )
+
 ]
 fastsurfer_output_spec = specs.SpecInfo(
     name="Output", fields=output_fields, bases=(specs.ShellOutSpec,)
