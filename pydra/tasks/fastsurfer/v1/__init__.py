@@ -2,12 +2,14 @@ from pydra.engine import specs
 from pydra.engine import ShellCommandTask
 import typing as ty
 from pathlib import Path
-from fileformats.generic import File
+from fileformats.generic import File, Directory
+from fileformats.medimage import NiftiGz, MghGz
+import os 
 
 input_fields = [
     (
         "subjects_dir",
-        ty.Any,
+        Path,
         {
             "help_string": "Subjects directory",
             "argstr": "--sd {subjects_dir}",
@@ -207,7 +209,60 @@ fastsurfer_input_spec = specs.SpecInfo(
     name="Input", fields=input_fields, bases=(specs.ShellSpec,)
 )
 
-output_fields = []
+def subject_dir_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs"
+
+# DELETE this after checking that the subject_dir_path works...
+# def subject_dir_path(subjects_dir: Path) -> Path:
+#     p = os.path.join(subjects_dir, "FS_outputs")
+#     print(Path(p))
+#     return Path(p)
+
+def norm_img_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs" / "mri" / "norm.mgz"
+
+# Update this section when Docker is being used
+def aparcaseg_img_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.mgz"
+
+def aparcaseg_orig_img_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.orig.mgz"
+
+output_fields = [
+      (
+        "subjects_dir_output",
+        Directory,
+        {
+            "help_string": "path to subject FS outputs",
+            "callable": subject_dir_path,
+        },
+    ),
+    ( 
+        "norm_img", 
+        MghGz,
+        {
+            "help_string": "norm image",
+            "callable": norm_img_path,
+        },
+    ),
+    (
+        "aparcaseg_img",
+        Path,
+        {
+            "help_string": "aparc+aseg image",
+            "callable": aparcaseg_img_path,
+        },
+    ),
+    (
+        "aparcasegorig_img",
+        MghGz,
+        {
+            "help_string": "aparc+aseg.orig image",
+            "callable": aparcaseg_orig_img_path,
+        },
+    )
+
+]
 fastsurfer_output_spec = specs.SpecInfo(
     name="Output", fields=output_fields, bases=(specs.ShellOutSpec,)
 )
@@ -219,7 +274,7 @@ class fastsurfer(ShellCommandTask):
     -------
 
     >>> from fileformats.generic import File
-    >>> from pydra.tasks.fastsurfer.auto.fast_surfer import fast_surfer
+    >>> from pydra.tasks.fastsurfer.v1.fast_surfer import fast_surfer
 
     """
 
