@@ -4,6 +4,7 @@ import typing as ty
 from pathlib import Path
 from fileformats.generic import File, Directory
 from fileformats.medimage import NiftiGz, MghGz
+import os 
 
 input_fields = [
     (
@@ -208,21 +209,38 @@ fastsurfer_input_spec = specs.SpecInfo(
     name="Input", fields=input_fields, bases=(specs.ShellSpec,)
 )
 
+def subject_dir_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs"
+
+# def subject_dir_path(subjects_dir: Path) -> Path:
+#     p = os.path.join(subjects_dir, "FS_outputs")
+#     print(Path(p))
+#     return Path(p)
+
 def norm_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "norm.mgz"
 
+# Update this section when Docker is being used
 def aparcaseg_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.orig.mgz"
 
-def subject_dir_path(subjects_dir: Path) -> Path:
-    return Path(subjects_dir) / "FS_outputs" 
+
 
 output_fields = [
+    # (
+    #     "subjects_dir",
+    #     Directory,
+    #     {
+    #         "help_string": "Subjects directory",
+    #         "argstr": "--sd {subjects_dir}",
+    #         "output_file_template": "subjects_dir",
+    #     },
+    # ),
     (
-        "subject_dir_output",
+        "subjects_dir_output",
         Directory,
         {
-            "help_string": "subject directory path",
+            "help_string": "path to subject FS outputs",
             "callable": subject_dir_path,
         },
     ),
