@@ -209,27 +209,36 @@ fastsurfer_input_spec = specs.SpecInfo(
     name="Input", fields=input_fields, bases=(specs.ShellSpec,)
 )
 
-def subject_dir_path(subjects_dir: Path):
-    return Path(subjects_dir) / "FS_outputs"
+# def subject_dir_path(subjects_dir: Path):
+#     return Path(subjects_dir) / "FS_outputs"
 
 # DELETE this after checking that the subject_dir_path works...
-# def subject_dir_path(subjects_dir: Path) -> Path:
-#     p = os.path.join(subjects_dir, "FS_outputs")
-#     print(Path(p))
-#     return Path(p)
+def subject_dir_path(subjects_dir: Path) -> Path:
+    p = os.path.join(subjects_dir, "FS_outputs")
+    print(Path(p))
+    return Path(p)
 
 def norm_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "norm.mgz"
 
 # Update this section when Docker is being used
-def aparcaseg_img_path(subjects_dir: Path):
+def aparcaseg_img_path(subjects_dir: Path) -> Path:
     return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.mgz"
 
 def aparcaseg_orig_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.orig.mgz"
 
-output_fields = [
-      (
+output_fields = [  
+     (
+        "subjects_dir",
+        Directory,
+        {
+            "help_string": "Subjects directory",
+            "argstr": "--sd {subjects_dir}",
+            "output_file_template": "subjects_dir",
+        },
+    ),
+    (
         "subjects_dir_output",
         Directory,
         {
@@ -281,3 +290,4 @@ class fastsurfer(ShellCommandTask):
     input_spec = fastsurfer_input_spec
     output_spec = fastsurfer_output_spec
     executable = "run_fastsurfer.sh"
+    
