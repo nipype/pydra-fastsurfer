@@ -28,12 +28,12 @@ jobs:
         - '--editable git+https://github.com/nipype/pydra.git#egg=pydra'
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Revert version to most recent tag on upstream update
       if: github.event_name == 'repository_dispatch'
       run: git checkout $(git tag -l | tail -n 1 | awk -F post '{print $1}')    
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install build dependencies
@@ -86,12 +86,12 @@ jobs:
         sudo cp /opt/FastSurfer/fastsurfer_env_gpu.yml /fastsurfer/fastsurfer_env_gpu.yml
         sudo cp -R /opt/FastSurfer/* /fastsurfer/ && rm -rf /opt/FastSurfer
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Revert version to most recent tag on upstream update
       if: github.event_name == 'repository_dispatch'
       run: git checkout $(git tag -l | tail -n 1 | awk -F post '{print $1}')
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install build dependencies
@@ -116,7 +116,7 @@ jobs:
       matrix:
         python-version: ['3.11']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         fetch-depth: 0
@@ -130,7 +130,7 @@ jobs:
         git commit -am"added auto-generated version to make new tag for package version"
         git tag ${TAG}post${POST}    
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install build tools
