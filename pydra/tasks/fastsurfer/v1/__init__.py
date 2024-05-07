@@ -209,24 +209,24 @@ fastsurfer_input_spec = specs.SpecInfo(
     name="Input", fields=input_fields, bases=(specs.ShellSpec,)
 )
 
-# def subject_dir_path(subjects_dir: Path):
-#     return Path(subjects_dir) / "FS_outputs"
-
 # DELETE this after checking that the subject_dir_path works...
-def subject_dir_path(subjects_dir: Path) -> Path:
-    p = os.path.join(subjects_dir, "FS_outputs")
-    print(Path(p))
-    return Path(p)
+# def subject_dir_path(subjects_dir: Path) -> Path:
+#     p = os.path.join(subjects_dir, "FS_outputs")
+#     print(Path(p))
+#     return Path(p)
+
+def subject_dir_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs"
 
 def norm_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "norm.mgz"
 
-# Update this section when Docker is being used
-def aparcaseg_img_path(subjects_dir: Path) -> Path:
+# # Update this section when Docker is being used
+def aparcaseg_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.mgz"
 
-def aparcaseg_orig_img_path(subjects_dir: Path):
-    return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.orig.mgz"
+def brainmask_img_path(subjects_dir: Path):
+    return Path(subjects_dir) / "FS_outputs" / "mri" / "brainmask.mgz"
 
 output_fields = [  
      (
@@ -256,18 +256,18 @@ output_fields = [
     ),
     (
         "aparcaseg_img",
-        Path,
+        MghGz,
         {
             "help_string": "aparc+aseg image",
             "callable": aparcaseg_img_path,
         },
     ),
     (
-        "aparcasegorig_img",
+        "brainmask_img",
         MghGz,
         {
-            "help_string": "aparc+aseg.orig image",
-            "callable": aparcaseg_orig_img_path,
+            "help_string": "brainmask.mgz image",
+            "callable": brainmask_img_path,
         },
     )
 
