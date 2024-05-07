@@ -1,11 +1,11 @@
-===============================
+=================================
 Pydra task package for fastsurfer
-===============================
+=================================
 
 .. image:: https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yml/badge.svg
    :target: https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yml
-.. .. image:: https://codecov.io/gh/nipype/pydra-fastsurfer/branch/main/graph/badge.svg?token=UIS0OGPST7
-..    :target: https://codecov.io/gh/nipype/pydra-fastsurfer
+.. image:: https://codecov.io/gh/nipype/pydra-fastsurfer/branch/main/graph/badge.svg?token=UIS0OGPST7
+   :target: https://codecov.io/gh/nipype/pydra-fastsurfer
 .. image:: https://img.shields.io/pypi/pyversions/pydra-fastsurfer.svg
    :target: https://pypi.python.org/pypi/pydra-fastsurfer/
    :alt: Supported Python versions
