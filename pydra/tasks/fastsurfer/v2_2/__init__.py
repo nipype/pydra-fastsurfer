@@ -3,8 +3,8 @@ from pydra.engine import ShellCommandTask
 import typing as ty
 from pathlib import Path
 from fileformats.generic import File, Directory
-from fileformats.medimage import NiftiGz, MghGz
-import os 
+from fileformats.medimage import MghGz
+
 
 input_fields = [
     (
@@ -209,27 +209,26 @@ fastsurfer_input_spec = specs.SpecInfo(
     name="Input", fields=input_fields, bases=(specs.ShellSpec,)
 )
 
-# DELETE this after checking that the subject_dir_path works...
-# def subject_dir_path(subjects_dir: Path) -> Path:
-#     p = os.path.join(subjects_dir, "FS_outputs")
-#     print(Path(p))
-#     return Path(p)
 
 def subject_dir_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs"
 
+
 def norm_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "norm.mgz"
+
 
 # # Update this section when Docker is being used
 def aparcaseg_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "aparc+aseg.mgz"
 
+
 def brainmask_img_path(subjects_dir: Path):
     return Path(subjects_dir) / "FS_outputs" / "mri" / "brainmask.mgz"
 
-output_fields = [  
-     (
+
+output_fields = [
+    (
         "subjects_dir",
         Directory,
         {
@@ -246,8 +245,8 @@ output_fields = [
             "callable": subject_dir_path,
         },
     ),
-    ( 
-        "norm_img", 
+    (
+        "norm_img",
         MghGz,
         {
             "help_string": "norm image",
@@ -269,15 +268,14 @@ output_fields = [
             "help_string": "brainmask.mgz image",
             "callable": brainmask_img_path,
         },
-    )
-
+    ),
 ]
 fastsurfer_output_spec = specs.SpecInfo(
     name="Output", fields=output_fields, bases=(specs.ShellOutSpec,)
 )
 
 
-class fastsurfer(ShellCommandTask):
+class Fastsurfer(ShellCommandTask):
     """
     Examples
     -------
@@ -290,4 +288,3 @@ class fastsurfer(ShellCommandTask):
     input_spec = fastsurfer_input_spec
     output_spec = fastsurfer_output_spec
     executable = "run_fastsurfer.sh"
-    

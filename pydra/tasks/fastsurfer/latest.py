@@ -1,3 +1,3 @@
-PACKAGE_VERSION = "v1"
+PACKAGE_VERSION = "v2.2"
 
-from .v1 import *  # noqa
+from .v2_2 import Fastsurfer  # noqa
