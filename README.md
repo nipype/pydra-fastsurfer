@@ -1,65 +1,53 @@
-=================================
-Pydra task package for fastsurfer
-=================================
+# Pydra task package for fastsurfer
 
-.. image:: https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yaml/badge.svg
-   :target: https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yaml
-.. image:: https://codecov.io/gh/nipype/pydra-fastsurfer/branch/main/graph/badge.svg?token=UIS0OGPST7
-   :target: https://codecov.io/gh/nipype/pydra-fastsurfer
-.. image:: https://img.shields.io/pypi/pyversions/pydra-fastsurfer.svg
-   :target: https://pypi.python.org/pypi/pydra-fastsurfer/
-   :alt: Supported Python versions
-.. image:: https://img.shields.io/pypi/v/pydra-fastsurfer.svg
-   :target: https://pypi.python.org/pypi/pydra-fastsurfer/
-   :alt: Latest Version
+[![Python Package](https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yaml/badge.svg)](https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yaml)
+[![Codecov](https://codecov.io/gh/nipype/pydra-fastsurfer/branch/main/graph/badge.svg?token=UIS0OGPST7)](https://codecov.io/gh/nipype/pydra-fastsurfer)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/pydra-fastsurfer.svg)](https://pypi.python.org/pypi/pydra-fastsurfer/)
+[![Latest Version](https://img.shields.io/pypi/v/pydra-fastsurfer.svg)](https://pypi.python.org/pypi/pydra-fastsurfer/)
+
+This package contains a Pydra interface for the fastsurfer toolkit.t.
 
 
-This package contains a Pydra interface for the fastsurfer toolkit.
+## Tests
 
-Tests
------
+This package comes with a battery of automatically generated test modules. To install the necessary dependencies to run the tests, use the following command:
 
-This package comes with a battery of automatically generated test modules. To install
 the necessary dependencies to run the tests
 
-.. code-block::
-
+```
    $ pip install -e .[test]
-
+```
 
 Then the tests, including `doctests` <https://docs.python.org/3/library/doctest.html>`__, can be launched using
 
-.. code-block::
-
+```
    $ pytest --doctest-modules pydra/tasks/*
+```
 
 
 By default, the tests are set to time-out after 10s, after which the underlying tool is
 assumed to have passed the validation/initialisation phase and we assume that it will
 run to completion. To disable this and run the test(s) through to completion run
 
-.. code-block::
-
+```
    $ pytest --doctest-modules --timeout-pass 0 pydra/tasks/*
+```
 
 
-Contributing to this package
-----------------------------
+## Contributing to this package
 
-Developer installation
-~~~~~~~~~~~~~~~~~~~~~~
-
+### Developer installation
 
 Install repo in developer mode from the source directory and install pre-commit to
 ensure consistent code-style and quality.
 
-.. code-block::
-
+```
    $ pip install -e .[test,dev]
    $ pre-commit install
+```
 
-Typing and sample test data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+### Typing and sample test data
 
 The automatically generated tests will attempt to provided the task instance to be tested
 with sensible default values based on the type of the field and any constraints it has
