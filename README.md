@@ -60,8 +60,8 @@ format of the file using the "mime-like" string corresponding to a
 [fileformats](https://github.com/ArcanaFramework/fileformats) class
 in the ``inputs > types`` and ``outputs > types`` dicts of the YAML spec.
 
-If the required file-type is not found implemented within fileformats, please see the `fileformats
-docs [https://arcanaframework.github.io/fileformats/developer.html] for instructions on how to define
+If the required file-type is not found implemented within fileformats, please see the [fileformats
+docs](https://arcanaframework.github.io/fileformats/developer.html) for instructions on how to define
 new fileformat types, and see 
 [fileformats-medimage-extras](https://github.com/ArcanaFramework/fileformats-medimage-extras/blob/6c2dabe91e95687eebc2639bb6f034cf9595ecfc/fileformats/extras/medimage/nifti.py#L30-L48)
 for an example on how to implement methods to generate sample data for them.
