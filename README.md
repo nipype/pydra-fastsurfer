@@ -18,7 +18,7 @@ the necessary dependencies to run the tests
    $ pip install -e .[test]
 ```
 
-Then the tests, including `doctests` <https://docs.python.org/3/library/doctest.html>`__, can be launched using
+Then the tests, including [doctests](https://docs.python.org/3/library/doctest.html), can be launched using
 
 ```
    $ pytest --doctest-modules pydra/tasks/*
