@@ -12,8 +12,6 @@ on:
     tags: [ '*' ]
   pull_request:
     branches: [ main, develop ]
-  repository_dispatch:
-    types: [create-release]
 
 jobs:
   
@@ -119,15 +117,7 @@ jobs:
       with:
         submodules: recursive
         fetch-depth: 0
-    - name: Tag release with a post-release based on Nipype and Nipype2Pydra versions
-      if: github.event_name == 'repository_dispatch'
-      run: |
-        TAG=$(git tag -l | tail -n 1 | awk -F post '{print $1}')
-        POST=$(python -c "from pydra.tasks.fastsurfer.auto._post_release import *; print(post_release)")
-        git checkout $TAG
-        git add -f pydra/tasks/fastsurfer/auto/_version.py
-        git commit -am"added auto-generated version to make new tag for package version"
-        git tag ${TAG}post${POST}    
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:

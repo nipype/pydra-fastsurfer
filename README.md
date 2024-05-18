@@ -1,6 +1,6 @@
 # Pydra task package for fastsurfer
 
-[![Python Package](https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yaml/badge.svg)](https://github.com/nipype/pydra-fastsurfer/actions/workflows/pythonpackage.yaml)
+[![CI/CD](https://github.com/nipype/pydra-fastsurfer/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/nipype/pydra-fastsurfer/actions/workflows/ci-cd.yaml)
 [![Codecov](https://codecov.io/gh/nipype/pydra-fastsurfer/branch/main/graph/badge.svg?token=UIS0OGPST7)](https://codecov.io/gh/nipype/pydra-fastsurfer)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/pydra-fastsurfer.svg)](https://pypi.python.org/pypi/pydra-fastsurfer/)
 [![Latest Version](https://img.shields.io/pypi/v/pydra-fastsurfer.svg)](https://pypi.python.org/pypi/pydra-fastsurfer/)
